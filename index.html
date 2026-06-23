@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Kontak Kustom</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Inisialisasi EmailJS dengan Public Key Anda nanti jika Anda memilikinya.
+        // Untuk demo, kita siapkan integrasinya di sini.
+        (function() {
+            emailjs.init("4fXmOAZttpX4m8oLS"); // Ganti dengan Public Key EmailJS Anda
+        })();
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Nav -->
+    <header class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-xl">
+                    <i class="fa-solid fa-paper-plane text-lg"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-slate-900">Kirim<span class="text-indigo-600">Data</span></span>
+            </div>
+            <div class="text-sm text-slate-500 hidden sm:block">
+                Penerima default: <span class="font-semibold text-indigo-600">redmisukamage@gmail.com</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        
+        <!-- Kolom Kiri: Formulir -->
+        <div class="md:col-span-7 bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-100">
+            <h2 class="text-2xl font-bold text-slate-900 mb-2">Formulir Pengiriman Data</h2>
+            <p class="text-slate-500 mb-6 text-sm">Isi formulir di bawah ini secara lengkap. Data yang Anda masukkan akan langsung dikirimkan ke alamat email tujuan.</p>
+
+            <!-- Form -->
+            <form id="dataForm" class="space-y-5">
+                <!-- Nama Lengkap -->
+                <div>
+                    <label for="from_name" class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+                        <input type="text" id="from_name" name="from_name" required
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                            placeholder="Masukkan nama lengkap Anda">
+                    </div>
+                </div>
+
+                <!-- Email Pengirim -->
+                <div>
+                    <label for="reply_to" class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email Anda</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-regular fa-envelope"></i>
+                        </span>
+                        <input type="email" id="reply_to" name="reply_to" required
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                            placeholder="nama@email.com">
+                    </div>
+                </div>
+
+                <!-- Nomor Telepon / WhatsApp -->
+                <div>
+                    <label for="phone" class="block text-sm font-semibold text-slate-700 mb-2">Nomor Telepon / WA</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-solid fa-phone"></i>
+                        </span>
+                        <input type="tel" id="phone" name="phone" required
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                            placeholder="Contoh: 08123456789">
+                    </div>
+                </div>
+
+                <!-- Subjek Pesan -->
+                <div>
+                    <label for="subject" class="block text-sm font-semibold text-slate-700 mb-2">Subjek / Perihal</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </span>
+                        <input type="text" id="subject" name="subject" required
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
+                            placeholder="Subjek pesan Anda">
+                    </div>
+                </div>
+
+                <!-- Detail Pesan / Data -->
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-slate-700 mb-2">Pesan atau Data Tambahan</label>
+                    <textarea id="message" name="message" rows="4" required
+                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm resize-none"
+                        placeholder="Tuliskan data atau pesan lengkap yang ingin dikirimkan..."></textarea>
+                </div>
+
+                <!-- Hidden Input untuk Email Penerima -->
+                <input type="hidden" name="to_email" value="redmisukamage@gmail.com">
+
+                <!-- Tombol Submit -->
+                <button type="submit" id="submitBtn"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-indigo-100 hover:shadow-indigo-200 active:scale-[0.98] transition-all flex items-center justify-center space-x-2 text-sm sm:text-base">
+                    <span id="btnText">Kirim Data Sekarang</span>
+                    <i id="btnIcon" class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+
+            <!-- Status Custom Alert (Sukses/Gagal) -->
+            <div id="statusAlert" class="mt-4 p-4 rounded-xl hidden flex items-start space-x-3 text-sm">
+                <!-- Icon & Text dinamis disisipkan via JS -->
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Panduan & Informasi -->
+        <div class="md:col-span-5 space-y-6">
+            <!-- Informasi Penerima -->
+            <div class="bg-indigo-900 text-white p-6 rounded-3xl shadow-xl">
+                <h3 class="font-bold text-lg mb-4 flex items-center">
+                    <i class="fa-solid fa-circle-info mr-2"></i> Detail Tujuan Email
+                </h3>
+                <div class="space-y-3 text-sm text-indigo-200">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-regular fa-envelope text-lg text-indigo-400"></i>
+                        <div>
+                            <p class="text-xs text-indigo-300">Email Tujuan Utama</p>
+                            <p class="font-medium text-white">redmisukamage@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-shield-halved text-lg text-indigo-400"></i>
+                        <div>
+                            <p class="text-xs text-indigo-300">Keamanan Data</p>
+                            <p class="font-medium text-white">Enkripsi SSL Sisi Klien</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Petunjuk Cara Menghubungkan -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-md">
+                <h3 class="font-bold text-slate-900 mb-3 text-md flex items-center">
+                    <i class="fa-solid fa-gears text-indigo-600 mr-2"></i> Langkah Konfigurasi (PENTING)
+                </h3>
+                <p class="text-slate-500 text-xs mb-4">Agar data dari formulir ini bisa masuk 100% langsung ke kotak masuk <strong>redmisukamage@gmail.com</strong>, Anda dapat menggunakan layanan gratis <strong>EmailJS</strong>:</p>
+                
+                <ol class="space-y-3 text-xs text-slate-600 list-decimal pl-4">
+                    <li>
+                        Daftar akun gratis di <a href="https://www.emailjs.com/" target="_blank" class="text-indigo-600 font-semibold hover:underline">emailjs.com</a>.
+                    </li>
+                    <li>
+                        Tambahkan layanan email baru (hubungkan dengan Gmail Anda <strong>redmisukamage@gmail.com</strong>).
+                    </li>
+                    <li>
+                        Buat Email Template baru. Atur isi template agar mencakup:
+                        <div class="bg-slate-50 p-2 rounded mt-1 border border-slate-200 font-mono text-[10px]">
+                            Dari: {{from_name}} ({{reply_to}})<br>
+                            Telepon: {{phone}}<br>
+                            Subjek: {{subject}}<br>
+                            Pesan: {{message}}
+                        </div>
+                    </li>
+                    <li>
+                        Ganti baris kode <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">emailjs.init("4fXmOAZttpX4m8oLS")</code> di berkas ini dengan Public Key Anda sendiri.
+                    </li>
+                    <li>
+                        Ubah baris kode JavaScript <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">"service_wydg3j8"</code> dan <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-600">"template_9gczr8n"</code> di dalam skrip di bawah ini.
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 py-6 px-6 text-center text-sm text-slate-400">
+        <div class="max-w-5xl mx-auto">
+            <p>&copy; 2026 Formulir Kontak Cepat. Dibuat untuk pengiriman langsung ke Gmail.</p>
+        </div>
+    </footer>
+
+    <!-- Script Utama -->
+    <script>
+        const form = document.getElementById('dataForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
+        const statusAlert = document.getElementById('statusAlert');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Ubah tampilan tombol saat proses loading
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+            submitBtn.classList.add('bg-indigo-400', 'cursor-not-allowed');
+            btnText.innerText = "Sedang Mengirim Data...";
+            btnIcon.className = "fa-solid fa-spinner animate-spin";
+
+            // Sembunyikan status alert sebelumnya jika ada
+            statusAlert.classList.add('hidden');
+
+            // Ambil data dari semua field input
+            const fromName = document.getElementById('from_name').value;
+            const replyTo = document.getElementById('reply_to').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Parameter template untuk EmailJS
+            const templateParams = {
+                from_name: fromName,
+                reply_to: replyTo,
+                phone: phone,
+                subject: subject,
+                message: message,
+                to_email: 'redmisukamage@gmail.com'
+            };
+
+            // Catatan Pengembang:
+            // Agar ini langsung mengirim ke akun EmailJS Anda, ganti parameter di bawah ini:
+            // "YOUR_SERVICE_ID" -> ID Layanan EmailJS Anda (misalnya: "service_gmail")
+            // "YOUR_TEMPLATE_ID" -> ID Template EmailJS Anda (misalnya: "template_abc123")
+            
+            const serviceID = "service_wydg3j8";
+            const templateID = "template_9gczr8n";
+
+            if (serviceID === "service_wydg3j8") {
+                // FALLBACK MOCK (Simulasi pengiriman jika belum dikonfigurasi)
+                setTimeout(() => {
+                    // Kembalikan tombol ke keadaan semula
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('bg-indigo-400', 'cursor-not-allowed');
+                    submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                    btnText.innerText = "Kirim Data Sekarang";
+                    btnIcon.className = "fa-solid fa-paper-plane";
+
+                    // Tampilkan notifikasi simulasi sukses
+                    statusAlert.className = "mt-4 p-4 rounded-xl flex items-start space-x-3 text-sm bg-amber-50 border border-amber-200 text-amber-800";
+                    statusAlert.innerHTML = `
+                        <i class="fa-solid fa-triangle-exclamation text-lg mt-0.5 text-amber-500"></i>
+                        <div>
+                            <span class="font-bold">Formulir Berhasil Disubmit (Mode Simulasi)!</span><br>
+                            Data telah divalidasi dan siap dikirim. Agar email benar-benar masuk ke kotak masuk <strong class="underline">redmisukamage@gmail.com</strong>, silakan ikuti petunjuk langkah konfigurasi EmailJS di kolom sebelah kanan halaman ini.
+                        </div>
+                    `;
+                    statusAlert.classList.remove('hidden');
+                    
+                    // Bersihkan form
+                    form.reset();
+                }, 1500);
+            } else {
+                // PENGIRIMAN SEBENARNYA (Jika sudah dikonfigurasi dengan kredensial asli)
+                emailjs.send(serviceID, templateID, templateParams)
+                    .then(function(response) {
+                        // Kembalikan tombol ke keadaan semula
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('bg-indigo-400', 'cursor-not-allowed');
+                        submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                        btnText.innerText = "Kirim Data Sekarang";
+                        btnIcon.className = "fa-solid fa-paper-plane";
+
+                        // Tampilkan Notifikasi Sukses Nyata
+                        statusAlert.className = "mt-4 p-4 rounded-xl flex items-start space-x-3 text-sm bg-green-50 border border-green-200 text-green-800";
+                        statusAlert.innerHTML = `
+                            <i class="fa-solid fa-circle-check text-lg mt-0.5 text-green-500"></i>
+                            <div>
+                                <span class="font-bold">Sukses!</span> Data berhasil terkirim langsung ke email <strong class="underline">redmisukamage@gmail.com</strong>. Kami akan segera menghubungi Anda kembali.
+                            </div>
+                        `;
+                        statusAlert.classList.remove('hidden');
+                        
+                        // Reset Form
+                        form.reset();
+                    }, function(error) {
+                        // Kembalikan tombol ke keadaan semula
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('bg-indigo-400', 'cursor-not-allowed');
+                        submitBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                        btnText.innerText = "Kirim Data Sekarang";
+                        btnIcon.className = "fa-solid fa-paper-plane";
+
+                        // Tampilkan Notifikasi Gagal
+                        statusAlert.className = "mt-4 p-4 rounded-xl flex items-start space-x-3 text-sm bg-red-50 border border-red-200 text-red-800";
+                        statusAlert.innerHTML = `
+                            <i class="fa-solid fa-circle-xmark text-lg mt-0.5 text-red-500"></i>
+                            <div>
+                                <span class="font-bold">Gagal Mengirim!</span> Terjadi kesalahan saat menghubungi server EmailJS. Detail Error: ${error.text}. Pastikan konfigurasi Anda sudah benar.
+                            </div>
+                        `;
+                        statusAlert.classList.remove('hidden');
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
